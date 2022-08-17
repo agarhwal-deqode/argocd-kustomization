@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp-argo-application-latest-kustomization
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/agarhwal-deqode/argocd-kustomization.git
+    targetRevision: HEAD
+    path: environments/staging
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: myapp-argocd-kustomization
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
